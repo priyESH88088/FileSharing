@@ -1,10 +1,12 @@
 import express from "express";
-const router =express.Router();
 import fileController from "../Controller/file.controller.js";
+import uploader from "../MiddleWare/uploader.js"; // <-- change require to import
 
+const router = express.Router();
 
-router.post("/upload",fileController.upload);
-router.post("/share",fileController.share);
-router.get("/download",fileController.download);
+router.post("/api/v1/file/upload", uploader.single("Resume"), fileController.upload);
+router.post("/api/v1/file/share", fileController.share);
+router.get("/file/:fileId", fileController.download);
 
 export default router;
+
